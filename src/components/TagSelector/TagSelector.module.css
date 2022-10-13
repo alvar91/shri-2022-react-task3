@@ -1,0 +1,65 @@
+.selectorWrapper {
+  position: relative;
+  height: 36px;
+  margin-bottom: 14px;
+  z-index: 2;
+}
+
+.selectorHead {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px;
+  width: 168px;
+  padding: 10px;
+  background: #e3e3e3;
+  border-radius: 3px 3px 0 0;
+  line-height: 16px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.arrowImage {
+  height: 10px;
+  width: 9px;
+  margin-right: 2px;
+}
+
+.selectorBodyWrapper {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  width: 168px;
+  background: #d8d7d7;
+  border-radius: 0px 0px 3px 3px;
+}
+
+.selectorBody {
+  height: 0px;
+  width: 148px;
+  margin: -10px 10px;
+  overflow-y: scroll;
+  transition: all 0.3s ease-out;
+}
+
+.open {
+  margin: 10px;
+  height: 126px;
+}
+
+.tagContainer {
+  display: flex;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.tagContainer:last-child {
+  margin: 0;
+}
+
+.checkbox {
+  margin: 2px 16px;
+}

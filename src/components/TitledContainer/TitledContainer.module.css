@@ -1,0 +1,45 @@
+.titledContainer {
+  min-width: 277px;
+  max-height: 100%;
+  margin-right: 12px;
+}
+
+.titledContainer:last-child {
+  margin-right: 0;
+}
+
+.titleContainer {
+  position: relative;
+  min-height: 19px;
+  margin: 0 27px 14px 27px;
+}
+
+.title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 19px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.optionsImage {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 12px;
+  width: 13px;
+  background: url("/public/img/more.svg") no-repeat center;
+  cursor: pointer;
+}
+
+.contentWrapper {
+  padding: 14px;
+  border: 1px solid #cacaca;
+  border-radius: 7px;
+}
+
+.content {
+  max-height: 100%;
+  width: 100%;
+}

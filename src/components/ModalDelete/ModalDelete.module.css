@@ -1,0 +1,29 @@
+.deleteModal {
+  width: 200px;
+  height: 83px;
+  margin: 44px 66px;
+}
+
+.title {
+  margin-bottom: 24px;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 500;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  width: 94px;
+  height: 40px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 15px;
+  cursor: pointer;
+}

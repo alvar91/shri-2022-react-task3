@@ -1,0 +1,59 @@
+.card {
+  width: 249px;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px 0 #0000001f;
+  cursor: pointer;
+}
+
+.upRow {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.title {
+  width: 206px;
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+.more {
+  display: flex;
+  width: 19px;
+  height: 13px;
+  padding: 5px 3px;
+  background: url("/public/img/more.svg") no-repeat center;
+  cursor: pointer;
+}
+
+.bottomRow {
+  display: flex;
+  align-items: flex-end;
+}
+
+.tagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 184px;
+}
+
+.notesContainer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1px;
+  height: 17px;
+  width: 41px;
+}
+
+.noteImage {
+  height: 17px;
+  width: 17px;
+}
+
+.descriptionImage {
+  margin-left: 6px;
+}

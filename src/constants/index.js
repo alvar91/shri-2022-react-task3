@@ -1,0 +1,4 @@
+import { TAGS_COLORS } from "./tags-color";
+import { TITLES, BUTTON_TITLES, FILTER_TITLES, ERROR_TITLE } from "./titles";
+
+export { TAGS_COLORS, TITLES, BUTTON_TITLES, FILTER_TITLES, ERROR_TITLE };

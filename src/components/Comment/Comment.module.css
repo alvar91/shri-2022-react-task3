@@ -1,0 +1,32 @@
+.userNameContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.userName {
+  font-size: 14px;
+  line-height: 15px;
+  font-weight: 400;
+}
+
+.text {
+  font-size: 12px;
+  line-height: 19px;
+  color: #565656;
+}
+
+.deleteCross {
+  width: 18px;
+  height: 17px;
+  background: url("/public/img/comment/closeCross.svg") no-repeat center;
+  cursor: pointer;
+}
+
+.section {
+  margin-bottom: 14px;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}

@@ -1,0 +1,9 @@
+.emptyText {
+    margin-bottom: 8px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 15px;
+    text-align: center;
+    color: #929292;
+}

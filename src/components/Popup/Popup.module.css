@@ -1,0 +1,37 @@
+.popup {
+  position: absolute;
+  top: 0;
+  right: -12px;
+  width: 133px;
+  height: 62px;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.12);
+  z-index: 1;
+}
+
+.popup li {
+  padding: 12px 0 4px 13px;
+  font-size: 14px;
+  line-height: 15px;
+  cursor: pointer;
+}
+
+.popup li:last-child {
+  padding: 4px 0 12px 13px;
+}
+
+.popup li:hover {
+  background-color: #e0e0e0;
+}
+
+.popupCloseCross {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  height: 17px;
+  width: 17px;
+  padding: 4px;
+  background: url("/public/img/popup/popupCloseCross.svg") no-repeat center;
+  cursor: pointer;
+}

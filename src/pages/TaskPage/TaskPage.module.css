@@ -1,0 +1,63 @@
+.taskPage {
+  width: 855px;
+  margin: 0 auto;
+  padding: 37px 0;
+}
+
+.returnButton {
+  display: flex;
+  position: relative;
+  padding-left: 53px;
+  align-items: center;
+  font-size: 15px;
+  line-height: 35px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.returnButton::before {
+  content: url("/public/img/taskPage/returnArrow.svg");
+  position: absolute;
+  left: 0;
+  width: 35px;
+  height: 35px;
+}
+
+.bottomContainer {
+  margin: 0 11px;
+}
+
+.commentContainer {
+  margin-bottom: 12px;
+}
+
+.addCommentButton {
+  display: flex;
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 16px;
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 15px;
+  align-items: center;
+  color: #929292;
+  cursor: pointer;
+}
+
+.addCommentButton::before {
+  content: url("/public/img/taskPage/plus.svg");
+  position: absolute;
+  left: 0;
+  height: 12px;
+  width: 12px;
+}
+
+.addCommentButtonText {
+
+  line-height: 15px;
+  color: #929292;
+}
+
+.buttonContainer {
+  text-align: center;
+}

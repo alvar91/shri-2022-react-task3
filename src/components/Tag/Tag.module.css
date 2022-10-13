@@ -1,0 +1,66 @@
+.tag {
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.small {
+  width: 40px;
+  height: 18px;
+}
+
+.short {
+  width: 60px;
+  height: 24px;
+}
+
+.middle {
+  width: 80px;
+  height: 24px;
+}
+
+.long {
+  width: 90px;
+  height: 24px;
+}
+
+.tagDeleteCross {
+  height: 7px;
+  width: 7px;
+  margin: 6px 6px 11px 47px;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.violet {
+  background-color: #eee1fd;
+}
+
+.green {
+  background-color: #baf8cf;
+}
+
+.red {
+  background-color: #fed6cc;
+}
+
+.orange {
+  background-color: #ffdcb6;
+}
+
+.blue {
+  background-color: #b8e6ff;
+}
+
+.warmGreen {
+  background-color: #d8fcb0;
+}
+
+.darkBlue {
+  background-color: #c6d9ff;
+}
+
+.yellow {
+  background-color: #fff4c7;
+}

@@ -1,0 +1,4 @@
+.listContainer {
+  display: flex;
+  height: calc(100% - 120px);
+}

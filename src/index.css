@@ -1,0 +1,73 @@
+@font-face {
+  font-family: "YS Text";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: local("YS Text Regular"), local("Yandex Sans Text Regular"),
+    local("YandexSans Text Regular"), local("YandexSansText-Regular"),
+    url("/src/assets/fonts/YandexSansText-Regular.woff2") format("woff2"),
+    url("/src/assets/fonts/YandexSansText-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "YS Text";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("/src/assets/fonts/YandexSansText-Medium.woff2") format("woff2"),
+    url("/src/assets/fonts/YandexSansText-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "YS Text";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("/src/assets/fonts/YandexSansText-Bold.woff2") format("woff2"),
+    url("/src/assets/fonts/YandexSansText-Bold.woff") format("woff");
+}
+
+body {
+  margin: 0;
+  font-family: "YS Text", Arial, serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  color: #333333;
+  text-decoration: none;
+  list-style: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  height: 0;
+  width: 6px;
+  background-color: #eaeaea;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b6b6b6;
+  border-radius: 3px;
+}
