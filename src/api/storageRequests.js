@@ -16,7 +16,7 @@ class StorageRequest {
       setTimeout(() => {
         const response = handler(...args);
         resolve(response);
-      }, 1000);
+      }, 100);
     });
   }
 }

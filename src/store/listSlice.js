@@ -10,8 +10,6 @@ import {
 
 import { TasksAPI } from "../api/tasksAPI";
 
-//import { data } from "./data";
-
 const initialState = {
   // lists: data,
   lists: null,
