@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 import StorageRequests from "./storageRequests";
 
 import { data } from "../store/data";
@@ -6,29 +8,46 @@ const storageRequests = new StorageRequests();
 const STORAGE_NAME = "STORAGE_NAME";
 
 export class TasksAPI {
-  //   async createTicket({ title, description }) {
-  //     const tasks = await this.requestAllTasks();
-  //     await this.updateTasks([...tasks, { title, description, id: uuidv4() }]);
-  //   }
+  static async addTask({ listId, task }) {
+    try {
+      let dataStorage = await storageRequests.getItem(STORAGE_NAME);
+      if (!dataStorage)
+        throw new Error(`Storage ${STORAGE_NAME} does not exist`);
 
-  async requestTasksWithFilters({ isTags }) {
-    const tasks = await this.requestAllTasks();
+      const newTask = {
+        id: uuid(),
+        ...task,
+        comments: [],
+      };
 
-    if (!tasks.length) {
-      return [];
+      dataStorage[listId].tasks.push(newTask);
+
+      await storageRequests.setItem(STORAGE_NAME, dataStorage);
+
+      return {listId, newTask};
+    } catch (e) {
+      console.error(e.message);
     }
-
-    return tasks.filter(/* делаем логику с isTags */);
   }
+
+  //   async requestTasksWithFilters({ isTags }) {
+  //     const tasks = await this.requestAllTasks();
+
+  //     if (!tasks.length) {
+  //       return [];
+  //     }
+
+  //     return tasks.filter(/* делаем логику с isTags */);
+  //   }
 
   static async requestAllTasks() {
     try {
       let dataStorage = await storageRequests.getItem(STORAGE_NAME);
 
-      if (!dataStorage)
-        await storageRequests.setItem(STORAGE_NAME, JSON.stringify(data));
-
-      dataStorage = await storageRequests.getItem(STORAGE_NAME);
+      if (!dataStorage) {
+        await storageRequests.setItem(STORAGE_NAME, data);
+        dataStorage = await storageRequests.getItem(STORAGE_NAME);
+      }
 
       // return storageRequests.getItem(STORAGE_NAME) || [];
       return dataStorage;
@@ -37,7 +56,7 @@ export class TasksAPI {
     }
   }
 
-  updateTasks(items) {
+  static updateTasks(items) {
     return storageRequests.setItem(STORAGE_NAME, items);
   }
 }

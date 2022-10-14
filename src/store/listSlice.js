@@ -20,25 +20,16 @@ const initialState = {
 };
 
 // Requests
-export const addTaskRequest = createAsyncThunk(
-  "lists/addTask"
-  // async (params) => {
-  //   try {
-  //     const { data } = await axios.post("/posts", params);
-  //     return data;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // TasksAPI.requestAllTasks
-);
 
 export const getAllTasksRequest = createAsyncThunk(
   "lists/getAllTasksRequest",
-
   TasksAPI.requestAllTasks
-  
+);
+
+export const addTaskRequest = createAsyncThunk(
+  "lists/addTaskRequest",
+
+  TasksAPI.addTask
 );
 
 // function updateList(newLists, key, list, tasks) {
@@ -72,12 +63,13 @@ const listSlice = createSlice({
       state.loading = false;
     },
 
-    // Add task to lists
+    // Add task to list
     [addTaskRequest.pending]: (state) => {
       state.loading = true;
     },
     [addTaskRequest.fulfilled]: (state, action) => {
       state.loading = false;
+      addTaskReducer(state, action)
       //state.posts.push(action.payload);
     },
     [addTaskRequest.rejected]: (state) => {

@@ -6,7 +6,6 @@ import List from "../List/List";
 import styles from "./ListContainer.module.css";
 
 export default function ListContainer({ lists }) {
-  console.log("lists", lists);
   const dispatch = useDispatch();
 
   function onDragEnd(result) {

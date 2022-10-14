@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addTask } from "../../store/listSlice";
+import { addTaskRequest } from "../../store/listSlice";
 import TitledContainer from "../TitledContainer/TitledContainer";
 import Input from "../Input/Input";
 import TagSelector from "../TagSelector/TagSelector";
@@ -24,7 +24,8 @@ export default function CreateTaskModal() {
   const [tags, setTags] = useState([]);
 
   function submitHandler(data) {
-    dispatch(addTask({ listId, task: { ...data, tags } }));
+    // dispatch(addTask({ listId, task: { ...data, tags } }));
+    dispatch(addTaskRequest({ listId, task: { ...data, tags } }));
     navigate(`/`);
   }
 

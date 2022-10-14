@@ -1,12 +1,8 @@
-const setItem = ([key, data]) => window.localStorage.setItem(key, data);
+const setItem = ([key, data]) => window.localStorage.setItem(key, JSON.stringify(data));
 
-const getItem = (key) => window.localStorage.getItem(key);
+const getItem = (key) => JSON.parse(window.localStorage.getItem(key));
 
 class StorageRequest {
-  initiateItems() {}
-
-  setItems() {}
-
   setItem(...args) {
     return this.__makeRequest(setItem, args);
   }
@@ -14,6 +10,7 @@ class StorageRequest {
   getItem(key) {
     return this.__makeRequest(getItem, key);
   }
+
 
   removeItem(...args) {
     return this.__makeRequest(localStorage.removeItem, ...args);

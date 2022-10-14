@@ -1,9 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  useLayoutEffect,
-} from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllTasksRequest } from "../../store/listSlice";
@@ -21,7 +16,7 @@ export default function BoardPage() {
 
   useEffect(() => {
     dispatch(getAllTasksRequest());
-  }, []);
+  }, [dispatch]);
 
   const lists = useSelector(selectListsByFilter);
   const loading = useSelector(selectLoading);
@@ -40,14 +35,12 @@ export default function BoardPage() {
 
   // if(Object.keys(lists) === 0) dispatch(getAllTasksRequest());
 
-  console.log(lists);
-  console.log("loading", loading);
+  // console.log(lists);
+  // console.log("loading", loading);
 
   if (loading) {
     return (
-      <div className={styles.boardPage}>
-        Загрузка данных, подождите...
-      </div>
+      <div className={styles.boardPage}>Загрузка данных, подождите...</div>
     );
   }
 

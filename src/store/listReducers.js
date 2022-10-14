@@ -5,15 +5,12 @@ function updateList(newLists, key, list, tasks) {
 }
 
 export function getAllTasksReducer(state, action) {
-    state.lists = JSON.parse(action.payload);
-    console.log(state.lists)
+  state.lists = action.payload;
 }
 
 export function addTaskReducer(state, action) {
   state.lists[action.payload.listId].tasks.push({
-    id: uuid(),
-    ...action.payload.task,
-    comments: [],
+    ...action.payload.newTask,
   });
 }
 
