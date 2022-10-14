@@ -15,13 +15,14 @@ export class TasksAPI {
     return await storageRequests.getItem(STORAGE_NAME);
   }
 
-  static async requestAllTasks() {
+  static async getAllTasks() {
     try {
       let dataStorage = await TasksAPI.getDataStorage();
 
       if (!dataStorage) {
         await storageRequests.setItem(STORAGE_NAME, data);
-        dataStorage = await this.getDataStorage();
+        return;
+        // dataStorage = await this.getDataStorage();
       }
 
       return dataStorage;
@@ -78,35 +79,83 @@ export class TasksAPI {
 
   static async editTask(data) {
     try {
-        const dataStorage = await TasksAPI.getDataStorage();
-        if (!dataStorage)
-          throw new Error(`Storage ${STORAGE_NAME} does not exist`);
-  
-        let newLists = {};
-  
-        const listsEntries = Object.entries(dataStorage);
-  
-        for (const [key, list] of listsEntries) {
-            const tasks = list.tasks.map((task) => {
-              if (task.id === data.id) {
-                return data;
-              } else {
-                return { ...task };
-              }
-            });
-        
-            updateList(newLists, key, list, tasks);
+      const dataStorage = await TasksAPI.getDataStorage();
+      if (!dataStorage)
+        throw new Error(`Storage ${STORAGE_NAME} does not exist`);
+
+      let newLists = {};
+
+      const listsEntries = Object.entries(dataStorage);
+
+      for (const [key, list] of listsEntries) {
+        const tasks = list.tasks.map((task) => {
+          if (task.id === data.id) {
+            return data;
+          } else {
+            return { ...task };
           }
-  
-        await storageRequests.setItem(STORAGE_NAME, newLists);
-  
-        return newLists;
-      } catch (e) {
-        console.error(e.message);
+        });
+
+        updateList(newLists, key, list, tasks);
       }
+
+      await storageRequests.setItem(STORAGE_NAME, newLists);
+
+      return newLists;
+    } catch (e) {
+      console.error(e.message);
+    }
   }
 
-//   static updateTasks(items) {
-//     return storageRequests.setItem(STORAGE_NAME, items);
-//   }
+  static async moveTask({ source, destination }) {
+    try {
+      const dataStorage = await TasksAPI.getDataStorage();
+      if (!dataStorage)
+        throw new Error(`Storage ${STORAGE_NAME} does not exist`);
+
+      if (source.droppableId === destination.droppableId) {
+        const list = dataStorage[source.droppableId];
+        const copiedTasks = [...list.tasks];
+        const [removed] = copiedTasks.splice(source.index, 1);
+        copiedTasks.splice(destination.index, 0, removed);
+
+        const newLists = {
+          ...dataStorage,
+          [source.droppableId]: {
+            ...list,
+            tasks: copiedTasks,
+          },
+        };
+
+        await storageRequests.setItem(STORAGE_NAME, newLists);
+
+        return newLists;
+      } else {
+        const sourceList = dataStorage[source.droppableId];
+        const destinationList = dataStorage[destination.droppableId];
+        const sourceTasks = [...sourceList.tasks];
+        const destinationTasks = [...destinationList.tasks];
+        const [removed] = sourceTasks.splice(source.index, 1);
+        destinationTasks.splice(destination.index, 0, removed);
+
+        const newLists = {
+          ...dataStorage,
+          [source.droppableId]: {
+            ...sourceList,
+            tasks: sourceTasks,
+          },
+          [destination.droppableId]: {
+            ...destinationList,
+            tasks: destinationTasks,
+          },
+        };
+
+        await storageRequests.setItem(STORAGE_NAME, newLists);
+
+        return newLists;
+      }
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
 }

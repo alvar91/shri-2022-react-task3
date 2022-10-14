@@ -1,7 +1,7 @@
 import React from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
-import { moveTask } from "../../store/listSlice";
+import { moveTaskRequest } from "../../store/listSlice";
 import List from "../List/List";
 import styles from "./ListContainer.module.css";
 
@@ -15,7 +15,8 @@ export default function ListContainer({ lists }) {
       return;
     }
 
-    dispatch(moveTask({ source, destination }));
+    // dispatch(moveTask({ source, destination }));
+    dispatch(moveTaskRequest({ source, destination }));
   }
 
   return (

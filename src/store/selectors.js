@@ -4,7 +4,9 @@ import { FILTER_TITLES } from "../constants";
 export const selectLists = (state) => state.lists.lists;
 export const selectLoading = (state) => state.lists.loading;
 export const selectFirstListId = (state) => {
-  const item = Object.entries(selectLists(state)).find(([id, {title}]) => title === "Todo")
+  if(Object.keys(selectLists(state)).length === 0) return [];
+  
+  const item = Object.entries(selectLists(state)).find(([id, {title}]) => title === "Todo");
   return item !== undefined ? item[0] : [];
 }
 
@@ -15,7 +17,7 @@ export const selectTask = (state) => state.task.task;
 
 
 export const selectListsByFilter = createSelector(
-  [selectLists, selectFilters, selectLoading, selectFirstListId],
+  [selectLists, selectFilters, selectLoading],
   (lists, filters) => {
     //console.log(lists)
     const activeFilter = filters.find((filter) => filter.selected);

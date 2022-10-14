@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-//import { v4 as uuid } from "uuid";
 
 import {
   getAllTasksReducer,
@@ -15,15 +14,14 @@ import { TasksAPI } from "../api/tasksAPI";
 
 const initialState = {
   // lists: data,
-  lists: {},
+  lists: null,
   loading: false,
 };
 
 // Requests
-
 export const getAllTasksRequest = createAsyncThunk(
   "lists/getAllTasksRequest",
-  TasksAPI.requestAllTasks
+  TasksAPI.getAllTasks
 );
 
 export const addTaskRequest = createAsyncThunk(
@@ -44,6 +42,12 @@ export const editTaskRequest = createAsyncThunk(
   TasksAPI.editTask
 );
 
+export const moveTaskRequest = createAsyncThunk(
+  "lists/moveTaskRequest",
+
+  TasksAPI.moveTask
+);
+
 const listSlice = createSlice({
   name: "lists",
   initialState,
@@ -57,7 +61,6 @@ const listSlice = createSlice({
     removeTask: (state, action) => removeTaskReducer(state, action),
   },
   extraReducers: {
-    
     // Fetch tasks
     [getAllTasksRequest.pending]: (state) => {
       state.loading = true;
@@ -76,19 +79,19 @@ const listSlice = createSlice({
     },
     [addTaskRequest.fulfilled]: (state, action) => {
       state.loading = false;
-      addTaskReducer(state, action)
+      addTaskReducer(state, action);
     },
     [addTaskRequest.rejected]: (state) => {
       state.loading = false;
     },
-    
+
     // Remove task from list
     [removeTaskRequest.pending]: (state) => {
       state.loading = true;
     },
     [removeTaskRequest.fulfilled]: (state, action) => {
       state.loading = false;
-      removeTaskReducer(state, action)
+      removeTaskReducer(state, action);
     },
     [removeTaskRequest.rejected]: (state) => {
       state.loading = false;
@@ -100,9 +103,21 @@ const listSlice = createSlice({
     },
     [editTaskRequest.fulfilled]: (state, action) => {
       state.loading = false;
-      editTaskReducer(state, action)
+      editTaskReducer(state, action);
     },
     [editTaskRequest.rejected]: (state) => {
+      state.loading = false;
+    },
+
+    // Move task between two lists
+    [moveTaskRequest.pending]: (state) => {
+      state.loading = true;
+    },
+    [moveTaskRequest.fulfilled]: (state, action) => {
+      state.loading = false;
+      moveTaskReducer(state, action);
+    },
+    [moveTaskRequest.rejected]: (state) => {
       state.loading = false;
     },
   },

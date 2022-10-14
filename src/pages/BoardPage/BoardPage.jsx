@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllTasksRequest } from "../../store/listSlice";
@@ -14,12 +14,14 @@ import styles from "./BoardPage.module.css";
 export default function BoardPage() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllTasksRequest());
-  }, [dispatch]);
-
   const lists = useSelector(selectListsByFilter);
   const loading = useSelector(selectLoading);
+  
+  useEffect(() => {
+    if(!lists) dispatch(getAllTasksRequest());
+  }, [lists, dispatch]);
+
+
 
   // const fetchTasks = useCallback(async () => {
   //   try {
@@ -33,12 +35,12 @@ export default function BoardPage() {
   //   fetchTasks();
   // }, [fetchTasks]);
 
-  // if(Object.keys(lists) === 0) dispatch(getAllTasksRequest());
+  
 
   // console.log(lists);
   // console.log("loading", loading);
 
-  if (loading) {
+  if (loading || !lists) {
     return (
       <div className={styles.boardPage}>Загрузка данных, подождите...</div>
     );
