@@ -1,9 +1,3 @@
-import { v4 as uuid } from "uuid";
-
-function updateList(newLists, key, list, tasks) {
-  newLists[key] = { ...list, tasks };
-}
-
 export function getAllTasksReducer(state, action) {
   state.lists = action.payload;
 }
@@ -15,22 +9,7 @@ export function addTaskReducer(state, action) {
 }
 
 export function editTaskReducer(state, action) {
-  const newLists = {};
-  const listsEntries = Object.entries(state.lists);
-
-  for (const [key, list] of listsEntries) {
-    const tasks = list.tasks.map((task) => {
-      if (task.id === action.payload.id) {
-        return action.payload;
-      } else {
-        return { ...task };
-      }
-    });
-
-    updateList(newLists, key, list, tasks);
-  }
-
-  state.lists = newLists;
+  state.lists = action.payload;
 }
 
 export function moveTaskReducer(state, action) {

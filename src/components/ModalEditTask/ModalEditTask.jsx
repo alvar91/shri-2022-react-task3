@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTask } from "../../store/selectors";
-import { editTask } from "../../store/listSlice";
+import { editTaskRequest } from "../../store/listSlice";
 import TitledContainer from "../TitledContainer/TitledContainer";
 import Input from "../Input/Input";
 import TagSelector from "../TagSelector/TagSelector";
@@ -26,7 +26,8 @@ export default function EditTaskModal() {
   }
 
   function submitHandler(data) {
-    dispatch(editTask({ id: task.id, ...data, tags, comments: task.comments }));
+    // dispatch(editTask({ id: task.id, ...data, tags, comments: task.comments }));
+    dispatch(editTaskRequest({ id: task.id, ...data, tags, comments: task.comments }));
     navigate(-1);
   }
 

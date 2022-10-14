@@ -38,9 +38,11 @@ export const removeTaskRequest = createAsyncThunk(
   TasksAPI.removeTask
 );
 
-// function updateList(newLists, key, list, tasks) {
-//   newLists[key] = { ...list, tasks };
-// }
+export const editTaskRequest = createAsyncThunk(
+  "lists/editTaskRequest",
+
+  TasksAPI.editTask
+);
 
 const listSlice = createSlice({
   name: "lists",
@@ -89,6 +91,18 @@ const listSlice = createSlice({
       removeTaskReducer(state, action)
     },
     [removeTaskRequest.rejected]: (state) => {
+      state.loading = false;
+    },
+
+    // Edit task in list
+    [editTaskRequest.pending]: (state) => {
+      state.loading = true;
+    },
+    [editTaskRequest.fulfilled]: (state, action) => {
+      state.loading = false;
+      editTaskReducer(state, action)
+    },
+    [editTaskRequest.rejected]: (state) => {
       state.loading = false;
     },
   },

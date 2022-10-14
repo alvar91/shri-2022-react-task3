@@ -76,7 +76,37 @@ export class TasksAPI {
     }
   }
 
-  static updateTasks(items) {
-    return storageRequests.setItem(STORAGE_NAME, items);
+  static async editTask(data) {
+    try {
+        const dataStorage = await TasksAPI.getDataStorage();
+        if (!dataStorage)
+          throw new Error(`Storage ${STORAGE_NAME} does not exist`);
+  
+        let newLists = {};
+  
+        const listsEntries = Object.entries(dataStorage);
+  
+        for (const [key, list] of listsEntries) {
+            const tasks = list.tasks.map((task) => {
+              if (task.id === data.id) {
+                return data;
+              } else {
+                return { ...task };
+              }
+            });
+        
+            updateList(newLists, key, list, tasks);
+          }
+  
+        await storageRequests.setItem(STORAGE_NAME, newLists);
+  
+        return newLists;
+      } catch (e) {
+        console.error(e.message);
+      }
   }
+
+//   static updateTasks(items) {
+//     return storageRequests.setItem(STORAGE_NAME, items);
+//   }
 }

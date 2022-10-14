@@ -4,7 +4,7 @@ import { useNavigate, Route, Routes } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTask } from "../../store/selectors";
-import { editTask, removeTaskRequest } from "../../store/listSlice";
+import { editTaskRequest, removeTaskRequest } from "../../store/listSlice";
 import TitledContainer from "../../components/TitledContainer/TitledContainer";
 import Input from "../../components/Input/Input";
 import Comment from "../../components/Comment/Comment";
@@ -43,7 +43,8 @@ export default function TaskPage() {
   
     const newTask = { id: task.id, ...data, tags, comments };
 
-    dispatch(editTask(newTask));
+    // dispatch(editTask(newTask));
+    dispatch(editTaskRequest(newTask));
     dispatch(setTask(newTask));
     setCurrentTask(newTask);
   }
