@@ -1,95 +1,87 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuid } from "uuid";
-import { data } from "./data";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+//import { v4 as uuid } from "uuid";
+
+import {
+  getAllTasksReducer,
+  addTaskReducer,
+  editTaskReducer,
+  moveTaskReducer,
+  removeTaskReducer,
+} from "./listReducers";
+
+import { TasksAPI } from "../api/tasksAPI";
+
+//import { data } from "./data";
 
 const initialState = {
-  lists: data,
+  // lists: data,
+  lists: {},
+  loading: false,
 };
 
-function updateList(newLists, key, list, tasks) {
-  newLists[key] = { ...list, tasks };
-}
+// Requests
+export const addTaskRequest = createAsyncThunk(
+  "lists/addTask"
+  // async (params) => {
+  //   try {
+  //     const { data } = await axios.post("/posts", params);
+  //     return data;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  // TasksAPI.requestAllTasks
+);
+
+export const getAllTasksRequest = createAsyncThunk(
+  "lists/getAllTasksRequest",
+
+  TasksAPI.requestAllTasks
+  
+);
+
+// function updateList(newLists, key, list, tasks) {
+//   newLists[key] = { ...list, tasks };
+// }
 
 const listSlice = createSlice({
   name: "lists",
   initialState,
   reducers: {
-    addTask(state, action) {
-      state.lists[action.payload.listId].tasks.push({
-        id: uuid(),
-        ...action.payload.task,
-        comments: [],
-      });
+    addTask: (state, action) => addTaskReducer(state, action),
+
+    editTask: (state, action) => editTaskReducer(state, action),
+
+    moveTask: (state, action) => moveTaskReducer(state, action),
+
+    removeTask: (state, action) => removeTaskReducer(state, action),
+  },
+  extraReducers: {
+    // Fetch tasks
+    [getAllTasksRequest.pending]: (state) => {
+      state.loading = true;
+    },
+    [getAllTasksRequest.fulfilled]: (state, action) => {
+      state.loading = false;
+      // state.posts = action.payload.posts;
+      getAllTasksReducer(state, action);
+      //state.popularPosts = action.payload.popularPosts;
+    },
+    [getAllTasksRequest.rejected]: (state) => {
+      state.loading = false;
     },
 
-    editTask(state, action) {
-      const newLists = {};
-      const listsEntries = Object.entries(state.lists);
-
-      for (const [key, list] of listsEntries) {
-        const tasks = list.tasks.map((task) => {
-          if (task.id === action.payload.id) {
-            return action.payload;
-          } else {
-            return { ...task };
-          }
-        });
-
-        updateList(newLists, key, list, tasks);
-      }
-
-      state.lists = newLists;
+    // Add task to lists
+    [addTaskRequest.pending]: (state) => {
+      state.loading = true;
     },
-
-    moveTask(state, action) {
-      const { source, destination } = action.payload;
-      if (source.droppableId === destination.droppableId) {
-        const list = state.lists[source.droppableId];
-        const copiedTasks = [...list.tasks];
-        const [removed] = copiedTasks.splice(source.index, 1);
-        copiedTasks.splice(destination.index, 0, removed);
-
-        state.lists = {
-          ...state.lists,
-          [source.droppableId]: {
-            ...list,
-            tasks: copiedTasks,
-          },
-        };
-      } else {
-        const sourceList = state.lists[source.droppableId];
-        const destinationList = state.lists[destination.droppableId];
-        const sourceTasks = [...sourceList.tasks];
-        const destinationTasks = [...destinationList.tasks];
-        const [removed] = sourceTasks.splice(source.index, 1);
-        destinationTasks.splice(destination.index, 0, removed);
-
-        state.lists = {
-          ...state.lists,
-          [source.droppableId]: {
-            ...sourceList,
-            tasks: sourceTasks,
-          },
-          [destination.droppableId]: {
-            ...destinationList,
-            tasks: destinationTasks,
-          },
-        };
-      }
+    [addTaskRequest.fulfilled]: (state, action) => {
+      state.loading = false;
+      //state.posts.push(action.payload);
     },
-
-    removeTask(state, action) {
-      let newLists = {};
-
-      const listsEntries = Object.entries(state.lists);
-
-      for (let [key, list] of listsEntries) {
-        let tasks = list.tasks.filter((task) => task.id !== action.payload.id);
-
-        updateList(newLists, key, list, tasks);
-      }
-
-      state.lists = newLists;
+    [addTaskRequest.rejected]: (state) => {
+      state.loading = false;
     },
   },
 });

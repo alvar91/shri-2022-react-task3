@@ -11,7 +11,6 @@ export default function App() {
     <div className={styles.App}>
       <Routes>
         <Route path="/full/:taskId/*" element={<TaskPage />} />
-        {/* <Route path="/full/:taskId/*" element={<TaskPage />} /> */}
         <Route path="*" element={<BoardPage />} />
       </Routes>
     </div>

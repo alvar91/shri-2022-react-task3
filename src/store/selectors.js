@@ -2,15 +2,22 @@ import { createSelector } from "@reduxjs/toolkit";
 import { FILTER_TITLES } from "../constants";
 
 export const selectLists = (state) => state.lists.lists;
-export const selectFirstListId = (state) => Object.entries(state.lists.lists).find(([id, {title}]) => title === "Todo")[0];
+export const selectLoading = (state) => state.lists.loading;
+export const selectFirstListId = (state) => {
+  const item = Object.entries(selectLists(state)).find(([id, {title}]) => title === "Todo")
+  return item !== undefined ? item[0] : [];
+}
 
 export const selectFilters = (state) => state.filters.filters;
 
 export const selectTask = (state) => state.task.task;
 
+
+
 export const selectListsByFilter = createSelector(
-  [selectLists, selectFilters, selectFirstListId],
+  [selectLists, selectFilters, selectLoading, selectFirstListId],
   (lists, filters) => {
+    //console.log(lists)
     const activeFilter = filters.find((filter) => filter.selected);
 
     if (!activeFilter) {

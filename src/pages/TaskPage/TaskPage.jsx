@@ -55,6 +55,7 @@ export default function TaskPage() {
 
   useEffect(() => {
     updateTask();
+    // eslint-disable-next-line
   }, [comments]);
 
   function addComment({ name, text }) {
