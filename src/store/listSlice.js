@@ -32,6 +32,12 @@ export const addTaskRequest = createAsyncThunk(
   TasksAPI.addTask
 );
 
+export const removeTaskRequest = createAsyncThunk(
+  "lists/removeTaskRequest",
+
+  TasksAPI.removeTask
+);
+
 // function updateList(newLists, key, list, tasks) {
 //   newLists[key] = { ...list, tasks };
 // }
@@ -49,15 +55,14 @@ const listSlice = createSlice({
     removeTask: (state, action) => removeTaskReducer(state, action),
   },
   extraReducers: {
+    
     // Fetch tasks
     [getAllTasksRequest.pending]: (state) => {
       state.loading = true;
     },
     [getAllTasksRequest.fulfilled]: (state, action) => {
       state.loading = false;
-      // state.posts = action.payload.posts;
       getAllTasksReducer(state, action);
-      //state.popularPosts = action.payload.popularPosts;
     },
     [getAllTasksRequest.rejected]: (state) => {
       state.loading = false;
@@ -70,9 +75,20 @@ const listSlice = createSlice({
     [addTaskRequest.fulfilled]: (state, action) => {
       state.loading = false;
       addTaskReducer(state, action)
-      //state.posts.push(action.payload);
     },
     [addTaskRequest.rejected]: (state) => {
+      state.loading = false;
+    },
+    
+    // Remove task from list
+    [removeTaskRequest.pending]: (state) => {
+      state.loading = true;
+    },
+    [removeTaskRequest.fulfilled]: (state, action) => {
+      state.loading = false;
+      removeTaskReducer(state, action)
+    },
+    [removeTaskRequest.rejected]: (state) => {
       state.loading = false;
     },
   },

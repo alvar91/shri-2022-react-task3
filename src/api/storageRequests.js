@@ -12,9 +12,9 @@ class StorageRequest {
   }
 
 
-  removeItem(...args) {
-    return this.__makeRequest(localStorage.removeItem, ...args);
-  }
+//   removeItem(...args) {
+//     return this.__makeRequest(localStorage.removeItem, ...args);
+//   }
 
   __makeRequest(handler, ...args) {
     return new Promise((resolve) => {

@@ -7,50 +7,70 @@ import { data } from "../store/data";
 const storageRequests = new StorageRequests();
 const STORAGE_NAME = "STORAGE_NAME";
 
+function updateList(newLists, key, list, tasks) {
+  newLists[key] = { ...list, tasks };
+}
 export class TasksAPI {
+  static async getDataStorage() {
+    return await storageRequests.getItem(STORAGE_NAME);
+  }
+
+  static async requestAllTasks() {
+    try {
+      let dataStorage = await TasksAPI.getDataStorage();
+
+      if (!dataStorage) {
+        await storageRequests.setItem(STORAGE_NAME, data);
+        dataStorage = await this.getDataStorage();
+      }
+
+      return dataStorage;
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+
   static async addTask({ listId, task }) {
     try {
-      let dataStorage = await storageRequests.getItem(STORAGE_NAME);
+      const dataStorage = await TasksAPI.getDataStorage();
       if (!dataStorage)
         throw new Error(`Storage ${STORAGE_NAME} does not exist`);
 
       const newTask = {
         id: uuid(),
-        ...task,
         comments: [],
+        ...task,
       };
 
       dataStorage[listId].tasks.push(newTask);
 
       await storageRequests.setItem(STORAGE_NAME, dataStorage);
 
-      return {listId, newTask};
+      return { listId, newTask };
     } catch (e) {
       console.error(e.message);
     }
   }
 
-  //   async requestTasksWithFilters({ isTags }) {
-  //     const tasks = await this.requestAllTasks();
-
-  //     if (!tasks.length) {
-  //       return [];
-  //     }
-
-  //     return tasks.filter(/* делаем логику с isTags */);
-  //   }
-
-  static async requestAllTasks() {
+  static async removeTask({ id }) {
     try {
-      let dataStorage = await storageRequests.getItem(STORAGE_NAME);
+      const dataStorage = await TasksAPI.getDataStorage();
+      if (!dataStorage)
+        throw new Error(`Storage ${STORAGE_NAME} does not exist`);
 
-      if (!dataStorage) {
-        await storageRequests.setItem(STORAGE_NAME, data);
-        dataStorage = await storageRequests.getItem(STORAGE_NAME);
+      let newLists = {};
+
+      const listsEntries = Object.entries(dataStorage);
+
+      for (let [key, list] of listsEntries) {
+        let tasks = list.tasks.filter((task) => task.id !== id);
+
+        updateList(newLists, key, list, tasks);
       }
 
-      // return storageRequests.getItem(STORAGE_NAME) || [];
-      return dataStorage;
+      await storageRequests.setItem(STORAGE_NAME, newLists);
+
+      return newLists;
     } catch (e) {
       console.error(e.message);
     }

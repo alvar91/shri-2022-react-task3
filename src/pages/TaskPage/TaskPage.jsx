@@ -4,7 +4,7 @@ import { useNavigate, Route, Routes } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTask } from "../../store/selectors";
-import { editTask, removeTask } from "../../store/listSlice";
+import { editTask, removeTaskRequest } from "../../store/listSlice";
 import TitledContainer from "../../components/TitledContainer/TitledContainer";
 import Input from "../../components/Input/Input";
 import Comment from "../../components/Comment/Comment";
@@ -68,7 +68,8 @@ export default function TaskPage() {
 
   function deleteTask() {
     setDeleteModalOpen(false);
-    dispatch(removeTask({ id: task.id }));
+    // dispatch(removeTask({ id: task.id }));
+    dispatch(removeTaskRequest({ id: task.id }));
     navigate("/");
   }
 

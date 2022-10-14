@@ -71,15 +71,5 @@ export function moveTaskReducer(state, action) {
 }
 
 export function removeTaskReducer(state, action) {
-  let newLists = {};
-
-  const listsEntries = Object.entries(state.lists);
-
-  for (let [key, list] of listsEntries) {
-    let tasks = list.tasks.filter((task) => task.id !== action.payload.id);
-
-    updateList(newLists, key, list, tasks);
-  }
-
-  state.lists = newLists;
+  state.lists = action.payload;
 }
