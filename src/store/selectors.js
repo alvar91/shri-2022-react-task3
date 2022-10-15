@@ -2,7 +2,8 @@ import { createSelector } from "@reduxjs/toolkit";
 import { FILTER_TITLES } from "../constants";
 
 export const selectLists = (state) => state.lists.lists;
-export const selectLoading = (state) => state.lists.loading;
+export const selectListLoading = (state) => state.lists.loading;
+export const selectTaskLoading = (state) => state.task.loading;
 export const selectFirstListId = (state) => {
   if(!selectLists(state)) return;
   
@@ -11,14 +12,15 @@ export const selectFirstListId = (state) => {
 
 export const selectFilters = (state) => state.filters.filters;
 
+// export const selectTask = (state) => state.task.task;
+
 export const selectTask = (state) => state.task.task;
 
 
 
 export const selectListsByFilter = createSelector(
-  [selectLists, selectFilters, selectLoading, selectFirstListId],
+  [selectLists, selectFilters, selectListLoading, selectFirstListId],
   (lists, filters) => {
-    //console.log(lists)
     const activeFilter = filters.find((filter) => filter.selected);
 
     if (!activeFilter) {

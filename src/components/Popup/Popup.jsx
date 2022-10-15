@@ -5,7 +5,7 @@ export default function Popup({ options, close }) {
   return (
     <div className={styles.popup}>
       <ul>
-        {options.map((option) => (
+        {options?.map((option) => (
           <li
             onClick={() => {
               option.action();

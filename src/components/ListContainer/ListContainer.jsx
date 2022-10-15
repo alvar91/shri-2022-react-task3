@@ -22,7 +22,7 @@ export default function ListContainer({ lists }) {
   return (
     <div className={styles.listContainer}>
       <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
-        {Object.entries(lists).map(([id, list]) => (
+        {Object.entries(lists)?.map(([id, list]) => (
           <List
             id={id}
             title={list.title}

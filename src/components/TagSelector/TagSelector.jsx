@@ -10,13 +10,13 @@ export default function TagSelector({
   setSelectedTags,
   ...props
 }) {
-  const defaultTags = Object.values(TAGS_COLORS).map((color) => {
+  const defaultTags = Object.values(TAGS_COLORS)?.map((color) => {
     return { color, selected: false };
   });
 
   const [open, setOpen] = useState(false);
   const [tags, setTags] = useState(
-    defaultTags.map((tag) => ({
+    defaultTags?.map((tag) => ({
       ...tag,
       selected: selectedTags.includes(tag.color),
     }))
@@ -24,7 +24,7 @@ export default function TagSelector({
 
   function toggleTag(clickedTag) {
     setTags(
-      tags.map((tag) => {
+      tags?.map((tag) => {
         if (tag.color === clickedTag.color) {
           return {
             color: tag.color,
@@ -64,7 +64,7 @@ export default function TagSelector({
         <div
           className={classNames(styles.selectorBody, { [styles.open]: open })}
         >
-          {tags.map((tag) => (
+          {tags?.map((tag) => (
             <div
               className={styles.tagContainer}
               onClick={() => toggleTag(tag)}

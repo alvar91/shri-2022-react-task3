@@ -22,7 +22,6 @@ export class TasksAPI {
       if (!dataStorage) {
         await storageRequests.setItem(STORAGE_NAME, data);
         return;
-        // dataStorage = await this.getDataStorage();
       }
 
       return dataStorage;
@@ -40,6 +39,7 @@ export class TasksAPI {
       const newTask = {
         id: uuid(),
         comments: [],
+        tags: [],
         ...task,
       };
 
@@ -154,6 +154,30 @@ export class TasksAPI {
 
         return newLists;
       }
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+
+  static async getTask(taskId) {
+    try {
+      let dataStorage = await TasksAPI.getDataStorage();
+
+      if (!dataStorage) {
+        await storageRequests.setItem(STORAGE_NAME, data);
+        return;
+      }
+
+      const currentTask = Object.values(dataStorage)
+        .map(({ tasks }) => tasks)
+        .flat()
+        .find(({ id }) => id === taskId);
+
+      if (currentTask === undefined) {
+        throw new Error(`Task ${taskId} does not exist`);
+      }
+
+      return currentTask;
     } catch (e) {
       console.error(e.message);
     }

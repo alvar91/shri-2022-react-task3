@@ -10,7 +10,7 @@ export default function TagContainer({
 }) {
   return (
     <div className={styles.tagContainer} {...props}>
-      {tags.map((tag) => (
+      {tags?.map((tag) => (
         <Tag
           size="short"
           color={tag}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
-import { useNavigate, Route, Routes } from "react-router-dom";
+import { useParams, useNavigate, Route, Routes } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTask } from "../../store/selectors";
@@ -17,11 +17,41 @@ import styles from "./TaskPage.module.css";
 import { setTask } from "../../store/taskSlice";
 import TagSelector from "../../components/TagSelector/TagSelector";
 
-export default function TaskPage() {
-  const taskData = useSelector(selectTask);
-  const [task, setCurrentTask] = useState(taskData);
+import { getTaskRequest } from "../../store/taskSlice";
+import { selectListsByFilter, selectTaskLoading } from "../../store/selectors";
 
+export default function TaskPage() {
   const dispatch = useDispatch();
+
+  const loading = useSelector(selectTaskLoading);
+
+  const taskData = useSelector(selectTask);
+
+  const { taskId } = useParams();
+
+
+  console.log("taskData", taskData)
+  const [task, setCurrentTask] = useState(taskData);
+  console.log("afterTask", task)
+
+  const [tags, setTags] = useState(task?.tags);
+  const [comments, setComments] = useState(task?.comments);
+
+  useEffect(() => {
+    if (!taskData) {
+      dispatch(getTaskRequest(taskId));
+
+    }
+
+      setCurrentTask(taskData)
+      setTags(taskData?.tags)
+      setComments(taskData?.comments)
+
+  }, [taskData, taskId, dispatch]);
+
+  
+
+
   const { control, handleSubmit } = useForm();
 
   const navigate = useNavigate();
@@ -29,19 +59,18 @@ export default function TaskPage() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editing, setEditing] = useState(false);
 
-  const [tags, setTags] = useState(task.tags);
+
 
   function deleteTag(tagToDelete) {
     setTags(tags.filter((tag) => tag !== tagToDelete));
   }
 
-  const [comments, setComments] = useState(task.comments);
+
 
   function updateTask(
-    data = { title: task.title, description: task.description }
+    data = { title: task?.title, description: task?.description }
   ) {
-  
-    const newTask = { id: task.id, ...data, tags, comments };
+    const newTask = { id: task?.id, ...data, tags, comments };
 
     // dispatch(editTask(newTask));
     dispatch(editTaskRequest(newTask));
@@ -55,7 +84,7 @@ export default function TaskPage() {
   }
 
   useEffect(() => {
-    updateTask();
+    if(task) updateTask();
     // eslint-disable-next-line
   }, [comments]);
 
@@ -64,15 +93,26 @@ export default function TaskPage() {
   }
 
   function deleteComment(id) {
-    setComments(comments.filter((comment) => comment.id !== id));
+    setComments(comments.filter((comment) => comment?.id !== id));
   }
 
   function deleteTask() {
     setDeleteModalOpen(false);
     // dispatch(removeTask({ id: task.id }));
-    dispatch(removeTaskRequest({ id: task.id }));
+    dispatch(removeTaskRequest({ id: task?.id }));
     navigate("/");
   }
+  console.log("loading", loading);
+  console.log("task", task);
+
+  console.log(task)
+  if (loading || !taskData || !task) {
+    console.log("loading render")
+    return (
+      <div className={styles.boardPage}>Загрузка данных, подождите...</div>
+    );
+  }
+
 
   return (
     <div className={styles.taskPage}>
@@ -95,7 +135,7 @@ export default function TaskPage() {
         <Controller
           name="title"
           control={control}
-          defaultValue={task.title}
+          defaultValue={task?.title}
           rules={{ required: true }}
           render={({ field, ref }) => (
             <Input
@@ -111,7 +151,7 @@ export default function TaskPage() {
         <Controller
           name="description"
           control={control}
-          defaultValue={task.description}
+          defaultValue={task?.description}
           render={({ field, ref }) => (
             <Input
               isMultiline={true}
@@ -132,7 +172,7 @@ export default function TaskPage() {
             <TagSelector selectedTags={tags} setSelectedTags={setTags} />
           )}
           <article className={styles.commentContainer}>
-            {comments.map((comment, index) => (
+            {comments?.map((comment, index) => (
               <Comment
                 id={comment.id}
                 userName={comment.userName}

@@ -2,8 +2,7 @@ import React, { useEffect, useLayoutEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllTasksRequest } from "../../store/listSlice";
-// import { selectListsByFilter } from "../../store/selectors";
-import { selectListsByFilter, selectLoading } from "../../store/selectors";
+import { selectListsByFilter, selectListLoading } from "../../store/selectors";
 import FilterContainer from "../../components/FilterContainer/FilterContainer";
 import ListContainer from "../../components/ListContainer/ListContainer";
 import Modal from "../../components/Modal/Modal";
@@ -15,30 +14,11 @@ export default function BoardPage() {
   const dispatch = useDispatch();
 
   const lists = useSelector(selectListsByFilter);
-  const loading = useSelector(selectLoading);
+  const loading = useSelector(selectListLoading);
   
   useEffect(() => {
     if(!lists) dispatch(getAllTasksRequest());
   }, [lists, dispatch]);
-
-
-
-  // const fetchTasks = useCallback(async () => {
-  //   try {
-  //     await dispatch(getAllTasksRequest());
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   fetchTasks();
-  // }, [fetchTasks]);
-
-  
-
-  // console.log(lists);
-  // console.log("loading", loading);
 
   if (loading || !lists) {
     return (

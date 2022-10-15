@@ -20,7 +20,7 @@ export default function List({ id, title, tasks, buttonContent }) {
             {tasks.length === 0 ? (
               <p className={styles.emptyText}>Нет задач</p>
             ) : (
-              tasks.map((task, index) => (
+              tasks?.map((task, index) => (
                 <Draggable draggableId={task.id} index={index} key={task.id}>
                   {(provided) => (
                     <div

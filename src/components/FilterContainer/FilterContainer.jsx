@@ -15,7 +15,7 @@ export default function FilterContainer(props) {
 
   return (
     <ul className={styles.checkboxContainer} {...props}>
-      {filters.map((filter) => (
+      {filters?.map((filter) => (
         <Checkbox
           id={filter.id}
           text={filter.text}

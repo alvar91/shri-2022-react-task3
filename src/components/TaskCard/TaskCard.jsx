@@ -42,7 +42,7 @@ export default function TaskCard({
       </div>
       <div className={styles.bottomRow}>
         <div className={styles.tagContainer}>
-          {tags.map((tag, index) => (
+          {tags?.map((tag, index) => (
             <Tag
               size="small"
               color={tag}
