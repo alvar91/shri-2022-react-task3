@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllTasksRequest } from "../../store/listSlice";
@@ -8,6 +8,7 @@ import ListContainer from "../../components/ListContainer/ListContainer";
 import Modal from "../../components/Modal/Modal";
 import ModalCreateTask from "../../components/ModalCreateTask/ModalCreateTask";
 import ModalEditTask from "../../components/ModalEditTask/ModalEditTask";
+import Loader from "../../components/Loader/Loader";
 import styles from "./BoardPage.module.css";
 
 export default function BoardPage() {
@@ -21,9 +22,7 @@ export default function BoardPage() {
   }, [lists, dispatch]);
 
   if (loading || !lists) {
-    return (
-      <div className={styles.boardPage}>Загрузка данных, подождите...</div>
-    );
+    return <Loader/>;
   }
 
   return (

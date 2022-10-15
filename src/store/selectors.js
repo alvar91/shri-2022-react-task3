@@ -12,11 +12,7 @@ export const selectFirstListId = (state) => {
 
 export const selectFilters = (state) => state.filters.filters;
 
-// export const selectTask = (state) => state.task.task;
-
 export const selectTask = (state) => state.task.task;
-
-
 
 export const selectListsByFilter = createSelector(
   [selectLists, selectFilters, selectListLoading, selectFirstListId],

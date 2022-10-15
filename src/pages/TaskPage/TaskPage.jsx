@@ -13,12 +13,14 @@ import TagContainer from "../../components/TagContainer/TagContainer";
 import Modal from "../../components/Modal/Modal";
 import ModalDelete from "../../components/ModalDelete/ModalDelete";
 import ModalAddComment from "../../components/ModalAddComment/ModalAddComment";
+import Loader from "../../components/Loader/Loader";
+
 import styles from "./TaskPage.module.css";
 import { setTask } from "../../store/taskSlice";
 import TagSelector from "../../components/TagSelector/TagSelector";
 
 import { getTaskRequest } from "../../store/taskSlice";
-import { selectListsByFilter, selectTaskLoading } from "../../store/selectors";
+import { selectTaskLoading } from "../../store/selectors";
 
 export default function TaskPage() {
   const dispatch = useDispatch();
@@ -29,10 +31,7 @@ export default function TaskPage() {
 
   const { taskId } = useParams();
 
-
-  console.log("taskData", taskData)
   const [task, setCurrentTask] = useState(taskData);
-  console.log("afterTask", task)
 
   const [tags, setTags] = useState(task?.tags);
   const [comments, setComments] = useState(task?.comments);
@@ -40,17 +39,12 @@ export default function TaskPage() {
   useEffect(() => {
     if (!taskData) {
       dispatch(getTaskRequest(taskId));
-
     }
 
-      setCurrentTask(taskData)
-      setTags(taskData?.tags)
-      setComments(taskData?.comments)
-
+    setCurrentTask(taskData);
+    setTags(taskData?.tags);
+    setComments(taskData?.comments);
   }, [taskData, taskId, dispatch]);
-
-  
-
 
   const { control, handleSubmit } = useForm();
 
@@ -59,13 +53,9 @@ export default function TaskPage() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editing, setEditing] = useState(false);
 
-
-
   function deleteTag(tagToDelete) {
     setTags(tags.filter((tag) => tag !== tagToDelete));
   }
-
-
 
   function updateTask(
     data = { title: task?.title, description: task?.description }
@@ -84,7 +74,7 @@ export default function TaskPage() {
   }
 
   useEffect(() => {
-    if(task) updateTask();
+    if (task) updateTask();
     // eslint-disable-next-line
   }, [comments]);
 
@@ -102,17 +92,10 @@ export default function TaskPage() {
     dispatch(removeTaskRequest({ id: task?.id }));
     navigate("/");
   }
-  console.log("loading", loading);
-  console.log("task", task);
 
-  console.log(task)
   if (loading || !taskData || !task) {
-    console.log("loading render")
-    return (
-      <div className={styles.boardPage}>Загрузка данных, подождите...</div>
-    );
+    return <Loader />;
   }
-
 
   return (
     <div className={styles.taskPage}>

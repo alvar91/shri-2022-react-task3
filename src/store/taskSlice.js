@@ -8,21 +8,16 @@ const initialState = {
   loading: false,
 };
 
-// const initialState = {
-//   task: {
-//     id: "98c17558-367c-4b83-bb31-fb5ce83b3666",
-//     title: "Сверстать лендинг по готовому шаблону",
-//     tags: ["blue", "warmGreen", "darkBlue", "yellow"],
-//     comments: [],
-//     description: "",
-//   },
-// };
-
 // Requests
 export const getTaskRequest = createAsyncThunk(
   "task/getTaskRequest",
   TasksAPI.getTask
 );
+
+// export const setNewTaskRequest = createAsyncThunk(
+//   "task/setNewTaskRequest",
+//   TasksAPI.setTask
+// );
 
 const taskSlice = createSlice({
   name: "task",
@@ -31,17 +26,29 @@ const taskSlice = createSlice({
     setTask: (state, action) => setTaskReducer(state, action),
   },
   extraReducers: {
+    // Fetch task by ID
     [getTaskRequest.pending]: (state) => {
       state.loading = true;
     },
     [getTaskRequest.fulfilled]: (state, action) => {
-      console.log(action.payload)
       state.loading = false;
       setTaskReducer(state, action);
     },
     [getTaskRequest.rejected]: (state) => {
       state.loading = false;
     },
+
+    // Set new task
+    // [setNewTaskRequest.pending]: (state) => {
+    //   state.loading = true;
+    // },
+    // [setNewTaskRequest.fulfilled]: (state, action) => {
+    //   state.loading = false;
+    //   setNewTaskReducer(state, action);
+    // },
+    // [setNewTaskRequest.rejected]: (state) => {
+    //   state.loading = false;
+    // },
   },
 });
 

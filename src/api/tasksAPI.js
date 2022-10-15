@@ -1,4 +1,5 @@
 import { v4 as uuid } from "uuid";
+import { toast } from "react-toastify";
 
 import StorageRequests from "./storageRequests";
 
@@ -6,6 +7,9 @@ import { data } from "../store/data";
 
 const storageRequests = new StorageRequests();
 const STORAGE_NAME = "STORAGE_NAME";
+
+const storageNotExistMessage = `Хранилище ${STORAGE_NAME} не существует`;
+const storageInitMessage = `Хранилище ${STORAGE_NAME} успешно инициализировано`;
 
 function updateList(newLists, key, list, tasks) {
   newLists[key] = { ...list, tasks };
@@ -21,11 +25,13 @@ export class TasksAPI {
 
       if (!dataStorage) {
         await storageRequests.setItem(STORAGE_NAME, data);
+        toast.success(storageInitMessage);
         return;
       }
 
       return dataStorage;
     } catch (e) {
+      toast.error(`${e.message}`);
       console.error(e.message);
     }
   }
@@ -34,7 +40,7 @@ export class TasksAPI {
     try {
       const dataStorage = await TasksAPI.getDataStorage();
       if (!dataStorage)
-        throw new Error(`Storage ${STORAGE_NAME} does not exist`);
+        throw new Error(storageNotExistMessage);
 
       const newTask = {
         id: uuid(),
@@ -49,6 +55,7 @@ export class TasksAPI {
 
       return { listId, newTask };
     } catch (e) {
+      toast.error(`${e.message}`);
       console.error(e.message);
     }
   }
@@ -57,7 +64,7 @@ export class TasksAPI {
     try {
       const dataStorage = await TasksAPI.getDataStorage();
       if (!dataStorage)
-        throw new Error(`Storage ${STORAGE_NAME} does not exist`);
+        throw new Error(storageNotExistMessage);
 
       let newLists = {};
 
@@ -73,6 +80,7 @@ export class TasksAPI {
 
       return newLists;
     } catch (e) {
+      toast.error(`${e.message}`);
       console.error(e.message);
     }
   }
@@ -81,7 +89,7 @@ export class TasksAPI {
     try {
       const dataStorage = await TasksAPI.getDataStorage();
       if (!dataStorage)
-        throw new Error(`Storage ${STORAGE_NAME} does not exist`);
+        throw new Error(storageNotExistMessage);
 
       let newLists = {};
 
@@ -103,6 +111,7 @@ export class TasksAPI {
 
       return newLists;
     } catch (e) {
+      toast.error(`${e.message}`);
       console.error(e.message);
     }
   }
@@ -111,7 +120,7 @@ export class TasksAPI {
     try {
       const dataStorage = await TasksAPI.getDataStorage();
       if (!dataStorage)
-        throw new Error(`Storage ${STORAGE_NAME} does not exist`);
+        throw new Error(storageNotExistMessage);
 
       if (source.droppableId === destination.droppableId) {
         const list = dataStorage[source.droppableId];
@@ -155,6 +164,7 @@ export class TasksAPI {
         return newLists;
       }
     } catch (e) {
+      toast.error(`${e.message}`);
       console.error(e.message);
     }
   }
@@ -165,6 +175,7 @@ export class TasksAPI {
 
       if (!dataStorage) {
         await storageRequests.setItem(STORAGE_NAME, data);
+        toast.success(storageInitMessage);
         return;
       }
 
@@ -174,11 +185,12 @@ export class TasksAPI {
         .find(({ id }) => id === taskId);
 
       if (currentTask === undefined) {
-        throw new Error(`Task ${taskId} does not exist`);
+        throw new Error(`Задача ${taskId} не существует`);
       }
 
       return currentTask;
     } catch (e) {
+      toast.error(`${e.message}`);
       console.error(e.message);
     }
   }

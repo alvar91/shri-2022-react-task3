@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 import {
   getAllTasksReducer,
@@ -66,9 +67,11 @@ const listSlice = createSlice({
     [getAllTasksRequest.fulfilled]: (state, action) => {
       state.loading = false;
       getAllTasksReducer(state, action);
+      toast.success("Данные успешно загружены");
     },
     [getAllTasksRequest.rejected]: (state) => {
       state.loading = false;
+      toast.error("Ошибка обращения к серверу");
     },
 
     // Add task to list
@@ -78,9 +81,11 @@ const listSlice = createSlice({
     [addTaskRequest.fulfilled]: (state, action) => {
       state.loading = false;
       addTaskReducer(state, action);
+      toast.success("Задача успешно добавлена");
     },
     [addTaskRequest.rejected]: (state) => {
       state.loading = false;
+      toast.error("Ошибка обращения к серверу");
     },
 
     // Remove task from list
@@ -90,9 +95,11 @@ const listSlice = createSlice({
     [removeTaskRequest.fulfilled]: (state, action) => {
       state.loading = false;
       removeTaskReducer(state, action);
+      toast.success("Задача успешно удалена");
     },
     [removeTaskRequest.rejected]: (state) => {
       state.loading = false;
+      toast.error("Ошибка обращения к серверу");
     },
 
     // Edit task in list
@@ -102,9 +109,11 @@ const listSlice = createSlice({
     [editTaskRequest.fulfilled]: (state, action) => {
       state.loading = false;
       editTaskReducer(state, action);
+      toast.success("Данные успешно обновлены");
     },
     [editTaskRequest.rejected]: (state) => {
       state.loading = false;
+      toast.error("Ошибка обращения к серверу");
     },
 
     // Move task between two lists
@@ -114,9 +123,11 @@ const listSlice = createSlice({
     [moveTaskRequest.fulfilled]: (state, action) => {
       state.loading = false;
       moveTaskReducer(state, action);
+      toast.success("Задача успешно перемещена");
     },
     [moveTaskRequest.rejected]: (state) => {
       state.loading = false;
+      toast.error("Ошибка обращения к серверу");
     },
   },
 });
