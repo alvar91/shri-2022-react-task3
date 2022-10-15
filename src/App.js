@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import BoardPage from "./pages/BoardPage/BoardPage";

@@ -1,4 +1,5 @@
-const setItem = ([key, data]) => window.localStorage.setItem(key, JSON.stringify(data));
+const setItem = ([key, data]) =>
+  window.localStorage.setItem(key, JSON.stringify(data));
 
 const getItem = (key) => JSON.parse(window.localStorage.getItem(key));
 
@@ -16,7 +17,7 @@ class StorageRequest {
       setTimeout(() => {
         const response = handler(...args);
         resolve(response);
-      }, 100);
+      }, 1000);
     });
   }
 }

@@ -39,8 +39,7 @@ export class TasksAPI {
   static async addTask({ listId, task }) {
     try {
       const dataStorage = await TasksAPI.getDataStorage();
-      if (!dataStorage)
-        throw new Error(storageNotExistMessage);
+      if (!dataStorage) throw new Error(storageNotExistMessage);
 
       const newTask = {
         id: uuid(),
@@ -63,8 +62,7 @@ export class TasksAPI {
   static async removeTask({ id }) {
     try {
       const dataStorage = await TasksAPI.getDataStorage();
-      if (!dataStorage)
-        throw new Error(storageNotExistMessage);
+      if (!dataStorage) throw new Error(storageNotExistMessage);
 
       let newLists = {};
 
@@ -88,8 +86,7 @@ export class TasksAPI {
   static async editTask(data) {
     try {
       const dataStorage = await TasksAPI.getDataStorage();
-      if (!dataStorage)
-        throw new Error(storageNotExistMessage);
+      if (!dataStorage) throw new Error(storageNotExistMessage);
 
       let newLists = {};
 
@@ -119,8 +116,7 @@ export class TasksAPI {
   static async moveTask({ source, destination }) {
     try {
       const dataStorage = await TasksAPI.getDataStorage();
-      if (!dataStorage)
-        throw new Error(storageNotExistMessage);
+      if (!dataStorage) throw new Error(storageNotExistMessage);
 
       if (source.droppableId === destination.droppableId) {
         const list = dataStorage[source.droppableId];

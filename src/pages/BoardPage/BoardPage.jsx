@@ -16,13 +16,13 @@ export default function BoardPage() {
 
   const lists = useSelector(selectListsByFilter);
   const loading = useSelector(selectListLoading);
-  
+
   useEffect(() => {
-    if(!lists) dispatch(getAllTasksRequest());
+    if (!lists) dispatch(getAllTasksRequest());
   }, [lists, dispatch]);
 
   if (loading || !lists) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   return (

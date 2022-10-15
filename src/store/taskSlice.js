@@ -14,11 +14,6 @@ export const getTaskRequest = createAsyncThunk(
   TasksAPI.getTask
 );
 
-// export const setNewTaskRequest = createAsyncThunk(
-//   "task/setNewTaskRequest",
-//   TasksAPI.setTask
-// );
-
 const taskSlice = createSlice({
   name: "task",
   initialState,
@@ -37,18 +32,6 @@ const taskSlice = createSlice({
     [getTaskRequest.rejected]: (state) => {
       state.loading = false;
     },
-
-    // Set new task
-    // [setNewTaskRequest.pending]: (state) => {
-    //   state.loading = true;
-    // },
-    // [setNewTaskRequest.fulfilled]: (state, action) => {
-    //   state.loading = false;
-    //   setNewTaskReducer(state, action);
-    // },
-    // [setNewTaskRequest.rejected]: (state) => {
-    //   state.loading = false;
-    // },
   },
 });
 

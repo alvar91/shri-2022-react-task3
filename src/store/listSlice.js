@@ -12,7 +12,6 @@ import {
 import { TasksAPI } from "../api/tasksAPI";
 
 const initialState = {
-  // lists: data,
   lists: null,
   loading: false,
 };

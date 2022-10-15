@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTask } from "../../store/selectors";
 import { editTaskRequest } from "../../store/listSlice";
@@ -12,23 +12,56 @@ import TagContainer from "../TagContainer/TagContainer";
 
 import { TITLES } from "../../constants";
 
+import { getTaskRequest } from "../../store/taskSlice";
+import { selectTaskLoading } from "../../store/selectors";
+
 export default function EditTaskModal() {
   const { control, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const task = useSelector(selectTask);
+  const loading = useSelector(selectTaskLoading);
 
-  const [tags, setTags] = useState(task.tags);
+  const { taskId } = useParams();
+
+  const taskData = useSelector(selectTask);
+
+  const [task, setCurrentTask] = useState(taskData);
+
+  const [tags, setTags] = useState(task?.tags);
+
+  useEffect(() => {
+    if (!taskData) {
+      dispatch(getTaskRequest(taskId));
+    }
+
+    setCurrentTask(taskData);
+    setTags(taskData?.tags);
+  }, [taskData, taskId, dispatch]);
 
   function deleteTag(tagToDelete) {
     setTags(tags.filter((tag) => tag !== tagToDelete));
   }
 
   function submitHandler(data) {
-    // dispatch(editTask({ id: task.id, ...data, tags, comments: task.comments }));
-    dispatch(editTaskRequest({ id: task.id, ...data, tags, comments: task.comments }));
-    navigate(-1);
+    dispatch(
+      editTaskRequest({ id: task.id, ...data, tags, comments: task.comments })
+    );
+    navigate("/");
+  }
+
+  if (loading || !taskData || !task) {
+    return (
+      <TitledContainer
+        title={TITLES.edit}
+        style={{
+          width: 340,
+          margin: "0 84px 64px 84px",
+        }}
+      >
+        Загрузка задачи, подождите...
+      </TitledContainer>
+    );
   }
 
   return (
@@ -72,10 +105,7 @@ export default function EditTaskModal() {
         deletePossibility={true}
         deleteTag={deleteTag}
       />
-      <TagSelector
-        selectedTags={tags}
-        setSelectedTags={setTags}
-      />
+      <TagSelector selectedTags={tags} setSelectedTags={setTags} />
       <Button onClick={handleSubmit(submitHandler)}>Сохранить</Button>
     </TitledContainer>
   );

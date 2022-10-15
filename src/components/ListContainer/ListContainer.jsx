@@ -15,7 +15,6 @@ export default function ListContainer({ lists }) {
       return;
     }
 
-    // dispatch(moveTask({ source, destination }));
     dispatch(moveTaskRequest({ source, destination }));
   }
 

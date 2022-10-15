@@ -62,7 +62,6 @@ export default function TaskPage() {
   ) {
     const newTask = { id: task?.id, ...data, tags, comments };
 
-    // dispatch(editTask(newTask));
     dispatch(editTaskRequest(newTask));
     dispatch(setTask(newTask));
     setCurrentTask(newTask);
@@ -88,7 +87,6 @@ export default function TaskPage() {
 
   function deleteTask() {
     setDeleteModalOpen(false);
-    // dispatch(removeTask({ id: task.id }));
     dispatch(removeTaskRequest({ id: task?.id }));
     navigate("/");
   }

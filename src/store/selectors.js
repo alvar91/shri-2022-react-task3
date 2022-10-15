@@ -5,10 +5,12 @@ export const selectLists = (state) => state.lists.lists;
 export const selectListLoading = (state) => state.lists.loading;
 export const selectTaskLoading = (state) => state.task.loading;
 export const selectFirstListId = (state) => {
-  if(!selectLists(state)) return;
-  
-  return Object.entries(selectLists(state)).find(([id, {title}]) => title === "Todo")[0];
-}
+  if (!selectLists(state)) return;
+
+  return Object.entries(selectLists(state)).find(
+    ([id, { title }]) => title === "Todo"
+  )[0];
+};
 
 export const selectFilters = (state) => state.filters.filters;
 

@@ -24,7 +24,6 @@ export default function CreateTaskModal() {
   const [tags, setTags] = useState([]);
 
   function submitHandler(data) {
-    // dispatch(addTask({ listId, task: { ...data, tags } }));
     dispatch(addTaskRequest({ listId, task: { ...data, tags } }));
     navigate(`/`);
   }
